@@ -47,13 +47,14 @@ export class AddProductComponent implements OnInit {
     private router : Router ,
     private formsModle : FormsModule,
     private emailValidatorTs : EmailValidators,
-    private http : HttpClient
+    private http : HttpClient,
+    private usernameValid : UsernameValidators
   ) {
     this.flag = false;
    }
 
    form = new FormGroup({
-    name_: new FormControl('', Validators.required),
+    name_: new FormControl('', Validators.required,this.usernameValid.notAUniqueProduct),
     price_: new FormControl('',Validators.required),
     discription_: new FormControl('', Validators.required),
     city_: new FormControl('', Validators.required),

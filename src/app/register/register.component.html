@@ -47,13 +47,15 @@
   <div class="row">
     <div class="col-10">
       <div class="jumbotron">
-        <h2>Angular Reactive Form validation</h2>
+        <h2>Register With Your Details : </h2>
         <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
           <div class="form-group">
             <label for="firstName">First Name</label>
             <input type="text"  class="form-control" formControlName="firstName" [ngClass]="{'is-invalid':form.get('firstName').touched && form.get('firstName').invalid}" required />
             <div class="invalid-feedback">
               <div>First Name is required</div>
+              <div *ngIf="form.get('firstName')?.errors?.notAUniqueName">First name should be unique.</div>
+
             </div>
           </div>
           <div class="form-group">
@@ -64,6 +66,9 @@
             <div class="invalid-feedback">
               <div>Username is required</div>
               <div *ngIf="username?.errors?.notAUniqueUsername">Username should be unique.</div>
+              <!-- <div *ngIf="form.get('email')?.pending"> not done</div>
+              <div *ngIf="!form.get('email')?.pending">  done</div> -->
+              <!-- <progress *ngIf="form.get('email').pending" class="progress is-one-quarter is-primary" max="100">15%</progress> -->
             </div>
           </div>
           <div class="form-group">
@@ -94,7 +99,6 @@
               <div *ngIf="form.get('phoneNumber').errors.required">Phone Number is required</div>
               <div *ngIf="form.get('phoneNumber').errors.minlength || form.get('phoneNumber').errors.maxlength">Phone Number  must be of 10 digit</div>
               <div *ngIf="form.get('phoneNumber').errors.isNotANum" class="help is-danger">Phone Number cannot contain anything other than digits</div> 
-<!-- phoneNo.errors.isNotANum -->
             </div>
            
           </div>

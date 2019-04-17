@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   
 
   form = new FormGroup({
-    firstName: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required,this.usernameValidators.notAUniqueName),
 
     username: new FormControl('', [
       Validators.required   
@@ -103,5 +103,8 @@ export class RegisterComponent implements OnInit {
     return this.form.get('username');
   }
   
+  get firstname (){
+    return this.form.get('firstname');
+  }
 
 }

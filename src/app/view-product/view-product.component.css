@@ -133,3 +133,36 @@
   0%, 39%, 100% { opacity: 0; }
   40% { opacity: 1; } 
 }
+
+::placeholder{
+  color:white;
+  font-size: 17px;
+  font-family: open sans;
+  }
+  .column1{
+  float: left;
+  width: 98%;
+  padding: 0px;
+  padding-top: 2px;
+  padding-left: 10px;
+  height: 50px;
+  border-radius: 20px;
+  border-color: black;
+  overflow: hidden;
+  /*background-color: #89bcff;*/
+  background-color: rgba(137, 188, 255, 0.5);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  color: #0066cc;
+  margin-top: 50px;
+  font-size: 30px;
+  margin-bottom: 50px;
+  margin-left: 10px;
+  }
+    .image1{
+      
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+

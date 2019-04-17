@@ -7,10 +7,13 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-view-product',
   templateUrl: './view-product.component.html',
-  styleUrls: ['./view-product.component.css']
+  styleUrls: ['./view-product.component.css','./animation.css','./button.css','./card.css']
 })
 export class ViewProductComponent implements OnInit {
   private spinner = true;
+  private show1 = false;
+  private show2 = false;
+  private show3 = false;
   constructor(private authService : AuthService,
     private router : Router,
     private flashMessages : FlashMessagesService ,
@@ -97,6 +100,21 @@ export class ViewProductComponent implements OnInit {
     this.router.navigate(['/bookProduct',this.nm]);
   }
 
+  showButton(){
+    if(this.show1)this.show1 = false;
+    else
+    this.show1 = true;
+  }
+  showButton2(){
+    if(this.show2)this.show2 = false;
+    else
+    this.show2 = true;
+  }
+  showButton3(){
+    if(this.show3)this.show3 = false;
+    else
+    this.show3 = true;
+  }
   src : any;
   loadIMG(product){
     this.authService.getImages().subscribe(res=>{

@@ -133,6 +133,11 @@ export class AuthService {
     return this.http.get('http://localhost:4000/users/getReqProduct');
   }
 
+  offlinePayment(product){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post('http://localhost:4000/users/paymentRecived', product , {headers:headers}).map(res=>res.json());  
+  }
   getProfile(){
     let headers = new Headers();
     this.loadToken();

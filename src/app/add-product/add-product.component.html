@@ -83,7 +83,8 @@
             <label for="name_">Product Name</label>
             <input type="text"  class="form-control" formControlName="name_" [ngClass]="{'is-invalid':form.get('name_').touched && form.get('name_').invalid}" required />
             <div class="invalid-feedback">
-              <div>Product Name is required</div>
+              <div *ngIf="form.get('name_')?.errors?.required">Product Name is required</div>
+              <div *ngIf="form.get('name_')?.errors?.notAUniqueProduct" >Product name should be in unique. Already in use</div> 
             </div>
           </div>
 

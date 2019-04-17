@@ -37,6 +37,11 @@ export class WebService {
     this.socket.emit('checkLogIn');
   }
 
+  refreshRealtime(){
+    // console.log("profile Realtime constructor");
+    this.socket.emit('profileRealtime');
+  }
+
   getSocket(){
       return this.socket;
   }

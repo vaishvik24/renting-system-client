@@ -43,8 +43,18 @@ export class HomeComponent implements OnInit {
                           this.products.filter(p => p.category_main === this.category) :
                           this.products;
                       });
-                    });
-};
+    });
+    
+    this.authService.getAllUsers().subscribe( res =>{
+      for(let i=0;i< res.json().length;i++){
+          this.allUsers[i] = {
+            name: res.json()[i].name,
+            username : res.json()[i].username,
+            status: false
+          };
+      }
+    });
+    };
 
   private products =[];
   private reqProducts = [];
@@ -76,17 +86,14 @@ export class HomeComponent implements OnInit {
     },err=>{
       console.log(err);
       return false;
-    });
-    
+    });  
     this.mysocket = this.webService.getSocket();
-
-    console.log(this.mysocket);
+    // console.log(this.mysocket);
     this.webService.onlineUserSend();
     this.mysocket.on('onlineUsers',(data)=>{
       this.numberOfOnline = data;
     });
     this.mysocket.on('checkLogout',()=>{
-      //console.log("doing logout");
       this.check();
     });
     this.mysocket.on('checkLogIn',()=>{
@@ -94,37 +101,35 @@ export class HomeComponent implements OnInit {
     });
     this.mysocket.on('onlineUsername',(data)=>{
       /// console.log("doing online index : "+ data);
-         this.allUsers[data].status = true;
+            this.allUsers[data].status = true;
      });
      //getting all the users 
      this.authService.getAllUsers().subscribe( res =>{
          for(let i=0;i< res.json().length;i++){
-             this.allUsers [i] = {
+             this.allUsers[i] = {
                name: res.json()[i].name,
                username : res.json()[i].username,
                status: false
              };
          }
      });
-            // checking tokens whether is null or not
+    // checking tokens whether is null or not
     
-            let obj = this.authService.checkToken();
-            if(obj ==null ){ 
-              //console.log("null return "); 
-            }
-            else{
-                //only check that current socket is loggedIn or not !
-      
-                this.authService.getAllUsers().subscribe(res =>{
-      
-                for(let i=0;i< res.json().length ; i++){
-                  if(res.json()[i].name == obj.name){
-                    this.allUsers[i].status = true;
-                    this.webService.sendUsername(i);
-                  }
-                }
-                });
-            }
+    let obj = this.authService.checkToken();
+    if(obj ==null ){ 
+      //console.log("null return "); 
+    }
+    else{
+        //only check that current socket is loggedIn or not !
+      this.authService.getAllUsers().subscribe(res =>{
+        for(let i=0;i< res.json().length ; i++){
+          if(res.json()[i].name == obj.name){
+            this.allUsers[i].status = true;
+            this.webService.sendUsername(i);
+          }
+        }
+      });
+    }
          //checking other ........
           this.webService.checkOther();
           this.mysocket.on('check',(data)=>{
@@ -146,6 +151,8 @@ export class HomeComponent implements OnInit {
     this.authService.getProducts().subscribe( response =>{
       for(let i=0;i< response.json().length ;i++){
         if(response.json()[i].owner_name != this.name){
+          var d2 = new Date(response.json()[this.count1].end_time);
+          var end_t = d2.getDay() + "-"+d2.getMonth() + "-"+d2.getFullYear();
             this.products[this.count1] = {
               _id : response.json()[i]._id,
               product_name: response.json()[i].product_name ,
@@ -160,7 +167,7 @@ export class HomeComponent implements OnInit {
               category_main : response.json()[i].category.main,
               category_sub : response.json()[i].category.sub,
               ini_time : response.json()[i].ini_time,
-              end_time : response.json()[i].end_time,
+              end_time : end_t,
               status : response.json()[i].status
             };
             this.myprod[this.count1] = {
@@ -199,6 +206,8 @@ export class HomeComponent implements OnInit {
     this.authService.getReqProducts().subscribe( response =>{
       for(let i=0;i< response.json().length ;i++){
         if(response.json()[i].owner_name != this.name){
+          var d2 = new Date(response.json()[this.count2].end_time);
+          var end_t = d2.getDay() + "-"+d2.getMonth() + "-"+d2.getFullYear();
             this.reqProducts[this.count2] = {
               _id : response.json()[i]._id,
               product_name: response.json()[i].product_name ,
@@ -211,7 +220,7 @@ export class HomeComponent implements OnInit {
               category_main : response.json()[i].category.main,
               category_sub : response.json()[i].category.sub,
               ini_time : response.json()[i].ini_time,
-              end_time : response.json()[i].end_time,
+              end_time : end_t,
               status : response.json()[i].status
 
             };
@@ -321,6 +330,12 @@ export class HomeComponent implements OnInit {
     console.log(object);
     this.authService.sendEmails(object).subscribe((Response)=>{
       if(Response.success)    this.flashMessages.show('Email is successfully sent to' + this.remail ,{cssClass: 'alert-success' ,timeout :4000});
+      else { this.flashMessages.show('Error in sending email to ' + this.remail ,{cssClass: 'alert-danger' ,timeout :4000}); }
+
+      this.semail = null;
+      this.msg = null;
+      this.spw = null;
+      this.remail = null;
 
     });
   }

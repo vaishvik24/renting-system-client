@@ -133,7 +133,7 @@ export class ViewReqProductComponent implements OnInit {
     
         var x = confirm("Make sure Do you want to book *"+ this.current_product.product_name + "* product ?");
         if(x){
-        
+          let day = this.dob.split("-",4);
           var d1 = Date.parse(this.dob);
           let split_ = this.current_product.end_time;
           split_ = split_.split("-",4)
@@ -154,11 +154,11 @@ export class ViewReqProductComponent implements OnInit {
             owner_email:this.current_product.owner_email,
             product_name:this.current_product.product_name,
             price:this.proposedprice,
-            edate:this.eday,
-            emonth:this.emonth,
-            eyear:this.eyear
+            edate: day[2],
+            emonth:day[1],
+            eyear:day[0]
           }
-          console.log("this "+ submit_product);
+          console.log(submit_product);
           this.authService.bookReqProduct(submit_product).subscribe( res => {
             if(res.successs){
               this.flashMessages.show('Your reqest for product '+ this.current_product.product_name +' is pending to owner.',{cssClass: 'alert-success' ,timeout :4000});

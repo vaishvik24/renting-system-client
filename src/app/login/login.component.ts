@@ -18,6 +18,8 @@ import { AuthService} from '../services/auth.service';
 import { Router} from '@angular/router';
 import {  FlashMessagesService } from 'angular2-flash-messages';
 import { FormsModule } from '@angular/forms';
+import { WebService} from '../services/websocket.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,7 +35,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService :AuthService,
               private router:Router,
-              private flashMessages : FlashMessagesService
+              private flashMessages : FlashMessagesService,
+              private webService: WebService
             ) { }
 
             private counter ;
@@ -58,7 +61,7 @@ export class LoginComponent implements OnInit {
             this.authService.storeUserData(data.token , data.user);
             this.flashMessages.show('now you are logged in' ,{cssClass: 'alert-success' ,timeout :5000});
             this.router.navigate(['Profile',user.username]);
-            //this.webService.checkingAtLogIn();
+            this.webService.checkingAtLogIn();
           }
           else {
             this.flashMessages.show(data.msg ,{cssClass: 'alert-danger' ,timeout :5000});

@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
   
   private hotelUser : any;
   private usernameOfUser;
-  
+  private navbarOpen = false;
   ngOnInit() {
    
     // this.authService.getProfile().subscribe(
@@ -58,5 +58,9 @@ export class NavbarComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/']);
     //this.webService.checkingAtLogout();
+  }
+  toggleNav(){
+    console.log("toggling navbar");
+    this.navbarOpen = !this.navbarOpen;
   }
 }

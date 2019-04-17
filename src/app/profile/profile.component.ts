@@ -4,6 +4,7 @@ import { Router} from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import {  FlashMessagesService } from 'angular2-flash-messages';
 import { Profile } from 'selenium-webdriver/firefox';
+import { WebService} from '../services/websocket.service';
  
 @Component({
   selector: 'app-profile',
@@ -35,6 +36,7 @@ export class ProfileComponent implements OnInit {
   constructor(private authService : AuthService ,
               private flashMessages : FlashMessagesService ,
               private router : Router,
+              private webService : WebService,
               private Route: ActivatedRoute) { 
 
                 this.authService.getProfile().subscribe( profile =>{
@@ -48,9 +50,18 @@ export class ProfileComponent implements OnInit {
                 });
             
  }
-
+  private mysocket : any;
+  private spinner1 = false; 
   ngOnInit() {
 
+    this.mysocket = this.webService.getSocket();
+
+    // console.log(this.mysocket);
+    this.mysocket.on('profileRealtime',()=>{
+      // this.numberOfOnline = data;
+      console.log("real time changing");
+      this.refreshData();
+    });
     this.nm = this.Route.snapshot.paramMap.get('name');
     if(this.nm == null){
       this.authService.getProfile().subscribe( profile =>{
@@ -120,6 +131,7 @@ export class ProfileComponent implements OnInit {
               } 
             }
           }     
+          this.spinner1 = true;
     });
 
     // console.log(this.bookedProducts);
@@ -260,6 +272,11 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  // change(){
+  //   // console.log("change");
+  //   this.webService.refreshRealtime();
+  // }
+
   giveProduct(item){
     console.log("give product");
     var object = {
@@ -287,7 +304,8 @@ export class ProfileComponent implements OnInit {
         console.log(object_);
         this.authService.sendEmails(object_).subscribe((Response)=>{
           if(Response.success)    this.flashMessages.show('Email is successfully sent ' ,{cssClass: 'alert-success' ,timeout :4000});
-          this.refreshData();
+          // this.refreshData();
+          this.webService.refreshRealtime();
         });
       }else {
         this.flashMessages.show("Error !" ,{cssClass: 'alert-danger' ,timeout :4000});
@@ -311,12 +329,13 @@ export class ProfileComponent implements OnInit {
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       }else {
-        this.flashMessages.show(res.msg ,{cssClass: 'alert-successs' ,timeout :4000});
+        this.flashMessages.show(res.msg ,{cssClass: 'alert-success' ,timeout :4000});
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       }
+      // this.refreshData();
+      this.webService.refreshRealtime();
     });
-    this.refreshData();
   }
 
   deleteReqProd(item){
@@ -330,7 +349,7 @@ export class ProfileComponent implements OnInit {
     console.log(object);
     this.authService.unmarkReqProduct(object).subscribe( res =>{
       if(res.successs){
-        this.flashMessages.show(res.messages,{cssClass: 'alert-successs' ,timeout :4000});
+        this.flashMessages.show(res.messages,{cssClass: 'alert-success' ,timeout :4000});
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       }else {
@@ -338,8 +357,10 @@ export class ProfileComponent implements OnInit {
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       }
+      // this.refreshData();
+      this.webService.refreshRealtime();
+      console.log("refresing from web");
     });
-    this.refreshData();
   }
   
   giveReqProduct(item){
@@ -366,14 +387,14 @@ export class ProfileComponent implements OnInit {
         this.authService.sendEmails(object_).subscribe((Response)=>{
           if(Response.success)    this.flashMessages.show('Email is successfully sent ' ,{cssClass: 'alert-success' ,timeout :4000});
           this.refreshData();
+          this.webService.refreshRealtime();
         });
       }else {
-        this.flashMessages.show(res.msg ,{cssClass: 'alert-successs' ,timeout :4000});
+        this.flashMessages.show(res.msg ,{cssClass: 'alert-success' ,timeout :4000});
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       }
     });
-
   }
 
   navigate2(i){
@@ -639,11 +660,32 @@ export class ProfileComponent implements OnInit {
         this.url_payment = res.url;
         this.flag_ = true;
       }
+      // this.refreshData();
+      this.webService.refreshRealtime();
     });
     // console.log("payment");
   }
 
-  paymentOffline(){
-    console.log("offline");
+  paymentOffline(item){
+    // console.log("offline");
+    // console.log(item.product_name + " " + item._id);
+    let object = {
+      id : item._id,
+      product_name : item.product_name
+    };
+    console.log(object);
+    this.authService.offlinePayment(object).subscribe(res=>{
+      if(!res.success){
+        this.flashMessages.show( "PAYMENT is not done offline. May have some problem" ,{cssClass: 'alert-danger' ,timeout :4000});
+      }else{
+        console.log("res "+ res);
+        // this.url_show = true;
+        this.flashMessages.show( "PAYMENT is  done offline. !!" ,{cssClass: 'alert-success' ,timeout :4000});
+      }
+      // this.refreshData();
+      this.webService.refreshRealtime();
+    });
   }
+
+ 
 }

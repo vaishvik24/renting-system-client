@@ -16,7 +16,8 @@
 <div *ngIf="!spinner">
   <h1>Product name : {{current_product?.product_name}}</h1>
   <hr>
-  <div class="row">
+  <br>
+  <!-- <div class="row">
     <div class="col-md-3" style="border:1px solid black; background-color: #fafdfc">
         <h2>Category Info.</h2>
         <h5>MAIN :</h5>
@@ -51,20 +52,63 @@
         <h2>DISCRIPTION :</h2>
         <p> {{current_product?.discription}}</p>
     </div>
-  </div>
-  <h2>IMAGES :</h2>
-  <!-- <img src="" height="420" width="420"> -->
-  <img src="http://localhost:4000/users/image/{{src}}" alt="">
-  <hr>
-
-  <button class="btn btn-primary" (click)="bookP()">Book Product</button>
-  <!-- <div>
-    <h1> PAYMENT :</h1>
-    <button class="btn btn-danger" (click)= "payment()">Payment</button>
-    <a  href={{url_payment}}>Click here to proceed to payment</a>
-
   </div> -->
+  
+<div class="card-container">
+  <div class="card">
+    <div class="side"><img src="http://localhost:4000/users/image/{{src}}" alt="Product"   align="middle"></div>
+    <div class="side back"> <h2> Product Description </h2><p class="p2"> {{current_product?.discription}} </p></div>
+  </div>
+  </div>
+
+  <div class="position2">
+    <div class="position1">
+   <div class="div1">
+    <section>
+      <a class="a1" (click)="showButton()">
+        <h1>Category Info</h1>
+      </a>
+      <div *ngIf="show1" align="center" style="background-color: rgba(137,188,255,0.5); color: #0066cc;  font-size: 25px">
+        Main: {{current_product?.category_main}} <br>
+        Sub: {{current_product?.category_sub}}<br>
+      </div>
+    </section>
+    <br>
+    <section>
+      <a class="a1" (click)="showButton2()">
+        <h1>Owner Info</h1>
+      </a>
+      <div *ngIf="show2" align="center" style="background-color: rgba(137,188,255,0.5); color: #0066cc;  font-size: 25px">
+        Owner Name: {{current_product?.owner_name}} <br>
+        Owner Email: {{current_product?.owner_email}}<br>
+        City: {{current_product?.city}} <br>
+        State:{{current_product?.state}} <br>
+      </div>
+    </section>
+    <br>
+    <section>
+      <a class="a1" (click)="showButton3()" >
+        <h1>Other Info</h1>
+      </a>
+      <div *ngIf="show3" align="center" style="background-color: rgba(137,188,255,0.5); color: #0066cc ; font-size: 25px">
+        Price:  {{current_product?.price}}<br>
+        Rating: {{current_product?.ratting}}<br>
+        Initial Time: {{current_product?.ini_time}}<br>
+        End Time: {{current_product?.end_time}}<br>
+      </div>
+    </section>
+  </div>
+  </div>
+  </div>
+  <br>
+  <div align="center">
+    <!-- <a href="#" class="myButton">Buy Product</a> -->
+    <button class="btn btn-primary" (click)="bookP()">Book Product</button>
+  </div>
+    
 </div>  
 <br>
+
+
 
 
