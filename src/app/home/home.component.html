@@ -1,0 +1,175 @@
+
+<div class="jumbotron" style="background-image: url('https://tse1.mm.bing.net/th?id=OIP.7TEdI0WX6nBjtjQAoKmmnwHaEK&pid=Api&P=0&w=316&h=179'); background-color: rgba(1, 2, 1, 0.692); padding-top: 2em; padding-bottom: 2em; padding-right: 1em; padding-left: 1em;">
+  <font color="black"> Welcome to RENTKARO offical website. For renting and landing an item in site you need to enroll.
+    <br>
+    <br>
+     <h3>WHY RENTKARO ? </h3>
+      <p style="color: #f3f7f6">Lorem ipsum dolor sit amet consectetur, adipisicing elit. In vel voluptatibus, iusto saepe eveniet soluta voluptatem, recusandae ut cum eos perferendis. Necessitatibus architecto officia, laboriosam animi voluptates dolorem in fugit!</p>
+
+  </font>
+</div>
+
+<div class="row" style="background-color: rgb(190, 189, 189)">
+  <div class="col-md-3">
+      <label>Your email id</label>
+      <input type="text" [(ngModel)]="semail" semail="semail" [ngModelOptions]="{standalone: true}" class="form-control">
+      <p style="color: blue">your registred : {{myemail_}}</p>
+  </div>
+  <div class="col-md-3">
+      <label>Your password</label>
+      <input type="password" [(ngModel)]="spw" spw="spw" [ngModelOptions]="{standalone: true}" class="form-control">
+  </div>
+  <div class="col-md-3">
+      <label>Sender emailID</label>
+      <input type="text" [(ngModel)]="remail" remail="remail" [ngModelOptions]="{standalone: true}" class="form-control">
+      <p style="color: blue">user's registred :  {{email_of_rec}}</p>
+  </div>
+  <div class="col-md-3">
+      <label>Message</label>
+      <input type="text" [(ngModel)]="msg" msg="msg" [ngModelOptions]="{standalone: true}" class="form-control">
+  </div>
+
+  <button type="btn btn-success"  (click)="sendMail()">Send email</button>
+</div>
+<br>
+<br>
+<h1 >Apply filter : </h1>
+<button (click)="allProducts()" class="btn btn-success" type="button">ALL PRODUCTS</button>
+<br>
+<br>
+<div class="row">
+  <div class="col-md-6">
+      <form id="filter">
+          <label>Filter by names :</label>
+          <input type="text" [(ngModel)]="term" term="term" [ngModelOptions]="{standalone: true}" />
+        </form>        
+  </div>
+  <div class="col-md-6">
+      <form id="filter2">
+          <label>Filter by price :</label>
+          <input type="text" [(ngModel)]="price_value" term="price_value" [ngModelOptions]="{standalone: true}" />
+        </form>    
+  </div>
+</div>
+<br>
+<button *ngFor="let c of cat_main" routerLink="/" 
+[queryParams]="{category:c}"
+[class.active]="category == c" class="btn-search" >{{c}} </button>
+  
+<div class="sk-fading-circle" *ngIf="spinner1">
+    <div class="sk-circle1 sk-circle"></div>
+    <div class="sk-circle2 sk-circle"></div>
+    <div class="sk-circle3 sk-circle"></div>
+    <div class="sk-circle4 sk-circle"></div>
+    <div class="sk-circle5 sk-circle"></div>
+    <div class="sk-circle6 sk-circle"></div>
+    <div class="sk-circle7 sk-circle"></div>
+    <div class="sk-circle8 sk-circle"></div>
+    <div class="sk-circle9 sk-circle"></div>
+    <div class="sk-circle10 sk-circle"></div>
+    <div class="sk-circle11 sk-circle"></div>
+    <div class="sk-circle12 sk-circle"></div>
+</div>
+
+  <hr>
+  <!-- | paginate: { itemsPerPage: 6, currentPage: p12 } -->
+<div *ngIf="!spinner1">
+  <div style="padding-left: 0.5em; padding-right: 0.5em;" >
+    <div class="row"  class="wrapper">
+      <div  *ngFor="let i of filter_product | filter:term | filtering: price_value ; let i1=index" class="wrapper2">
+            <img src="{{i.url}}" height="210" width="300">
+            <div style="background-color: #fafdfc;"> 
+              <h5>NAME : {{i.product_name}}</h5>
+              <h6>Date for it is available: {{i.end_time}}</h6>
+  
+            </div>
+            <div style="background-color: #f3f7f6;">
+              <h6>Price : {{i.price}} Rs</h6>
+              Ratting : <progress max="5" value="{{i.ratting}}" style=" border: rgb(3, 2, 3) 1px solid;"></progress>
+            </div>
+          <div class="row">
+            <div class="col-md-6">
+                <form (submit)="viewProduct(i)"style="float: left" >
+                    <button type="submit" value="submit" class="btn-g" style="border: rgb(3, 2, 3) 2px solid;" ><font style="color: white; ">View Product</font></button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form (submit)="bookProduct(i)" style="float: left" >
+                    <button type="submit" value="submit" class="btn-g" style="border: rgb(3, 2, 3) 2px solid;" ><font style="color: white">Book Product</font></button>
+                </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <a  *ngIf="!authService.loggedIn()"  style="cursor: pointer;"   [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a style="color:rgb(14, 11, 11)" [routerLink]="['/Login']"> <font color="white"> LOGIN to talk with {{i.owner_name}}</font> </a></a>
+              <!-- <a  *ngIf="authService.loggedIn()" style="cursor: pointer;" ><a style="cursor: pointer;" (click)="Chat_with(i)" style="color:rgb(22, 18, 18)"><font color="black">click here chat</font> </a></a> -->
+              <a  *ngIf="authService.loggedIn()" style="cursor: pointer;" ><a  style="cursor: pointer;" (click)="send_mail(i)" style="color:rgb(34, 29, 29)"><font color="black">click here email</font> </a></a>
+          
+            </div>
+
+            <div class="col-md-6" *ngIf="i.status">
+                <font color="red">SOLD OUT</font>
+            </div>
+          </div>  
+        </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="p12 = $event" style="text-align:center"></pagination-controls>
+</div>
+<div *ngIf="!spinner1">
+  <h1> Product that are requested </h1>
+
+  <div style="padding-left: 0.5em; padding-right: 0.5em;" >
+      <div class="row" class="wrapper">
+        <div *ngFor="let i of reqProducts ; let i1=index" class="wrapper2">
+              <div style="background-color: #fafdfc;"> 
+                <h5>NAME : {{i.product_name}}</h5>
+                <h6>Date for it is available: {{i.end_time}}</h6>
+                <h6>Price : {{i.price}} Rs</h6>
+            <a  *ngIf="!authService.loggedIn()"  style="cursor: pointer;"   [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a style="color:rgb(14, 11, 11)" [routerLink]="['/Login']"> <font color="white"> LOGIN to talk with {{i.owner_name}}</font> </a></a>
+            <!-- <a  *ngIf="authService.loggedIn()" style="cursor: pointer;"><a style="cursor: pointer;" (click)="Chat_with(i)" style="color:rgb(22, 18, 18)"><font color="black">Click here Chat </font> </a></a> -->
+            <!-- <br> -->
+            <a  *ngIf="authService.loggedIn()" style="cursor: pointer;" ><a style="cursor: pointer;" (click)="send_mail(i)" style="color:rgb(34, 29, 29)"><font color="black">Click here Email</font> </a></a>
+          </div>
+        
+          <div class="row">
+              <div class="col-md-7">
+                  <form (submit)="viewReqProduct(i)" style="float: left">
+                      <button type="submit" value="submit" class="btn-g1" style="border: rgb(3, 2, 3) 2px solid;" ><font style="color: white; ">Yes i have </font></button>
+                  </form>
+              </div>
+              <div class="col-md-4" *ngIf="i.status">
+                  <font color="red">SOLD OUT</font>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>  
+</div>
+  <!-- ***************************************************************************************** -->
+<div>
+  <!-- <label>Online users : {{numberOfOnline}}</label> -->
+  <h1> Online Users : {{numberOfOnline}}</h1><button  (click)="check()" class="btn btn-primary">REFRESH </button>
+<br>
+<br>
+<table border = "1" cellpadding = "5" cellspacing = "5" bgcolor = "white" width="50%">
+<tr>
+ <th>OUR USER</th>
+ <th style="width: 80px">STATUS</th>
+ <th> MESSAGE</th>
+</tr>
+
+<tr *ngFor="let item of allUsers">
+  <td> {{item.name}} </td>
+  <!-- <td> {{item.status}}</td> -->
+  <td *ngIf="item.status">  <div class="circle"></div> </td>
+  <td *ngIf="!item.status">   <div class="circle2"></div></td>
+  <td> <p *ngIf="item.username == currentUsername">Can not chat</p> <button class="btn btn-danger" *ngIf="item.username != currentUsername" (click)="chatTOUser(item)">GO</button></td>
+  <!-- <td> </td> -->
+
+</tr>
+</table>
+<br>
+
+</div>
+<hr>

@@ -1,0 +1,118 @@
+<!-- <div  class="bg-dark" id="myDiv"  >
+  <div style="margin-left: 10px ; margin-right: 10px ; " >
+    <h2 class="page-header">Register with your details</h2>
+
+    <form (submit)="onRegisterSubmit()" >
+      <div class="from-group"> 
+        <label>NAME</label>
+        <input type="text" [(ngModel)]="name" name="name" [ngModelOptions]="{standalone: true}" class="form-control">
+      </div>
+
+      <div>
+        <label>E-MAIL ADDRESS</label>
+        <input type="text" [(ngModel)]="email" email="email" [ngModelOptions]="{standalone: true}" class="form-control">
+      </div>
+
+      <div>
+        <label>PASSWORD</label>
+        <input type="password" [(ngModel)]="password" password="password" [ngModelOptions]="{standalone: true}" class="form-control">
+      </div>
+
+      <div>
+        <label>USERNAME</label>
+        <input type="text" [(ngModel)]="username" username="username" [ngModelOptions]="{standalone: true}" class="form-control">
+      </div>
+
+
+      <div>
+        <label>URL for image : </label>
+        <input type="text" [(ngModel)]="url" url="url" [ngModelOptions]="{standalone: true}" class="form-control">
+      </div>
+
+      
+      <div>
+        <label>PHONE NUMBER</label>
+        <input type="text" [(ngModel)]="phoneNum" username="phoneNum" [ngModelOptions]="{standalone: true}" class="form-control">
+      </div>
+      <br>
+      <input type="submit" class="btn btn-primary" value="submit">
+    </form>
+</div>
+</div> -->
+<!-- <br>
+<br>
+<br> -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+      <div class="jumbotron">
+        <h2>Angular Reactive Form validation</h2>
+        <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text"  class="form-control" formControlName="firstName" [ngClass]="{'is-invalid':form.get('firstName').touched && form.get('firstName').invalid}" required />
+            <div class="invalid-feedback">
+              <div>First Name is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" formControlName="username"
+            [class.is-invalid] = "username?.touched && username?.invalid"
+            />
+            <div class="invalid-feedback">
+              <div>Username is required</div>
+              <div *ngIf="username?.errors?.notAUniqueUsername">Username should be unique.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" formControlName="email" [ngClass]="{'is-invalid':form.get('email').touched && form.get('email').invalid}"   />
+            <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid"  class="invalid-feedback">
+              <div *ngIf="form.get('email')?.errors.required">Email Name is required</div>
+              <div *ngIf="form.get('email')?.errors.email">Email must be a valid email Address</div>
+              <div *ngIf="form.get('email')?.errors.validEmailEnter" >Email should be in standard format </div> 
+              <div *ngIf="form.get('email')?.errors.notAUniqueEmail" >Email should be in unique. Already in use</div> 
+              
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control"  formControlName="password" [ngClass]="{'is-invalid':form.get('password').touched && form.get('password').invalid}" />
+            <div *ngIf="form.get('password').touched && form.get('password').invalid"  class="invalid-feedback">
+              <div *ngIf="form.get('password').errors.required">Password is required</div>
+              <div *ngIf="form.get('password').errors.minlength">Password  must be a letaset 6 charector</div>
+            </div>
+           
+          </div>
+
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" class="form-control"  formControlName="phoneNumber" [ngClass]="{'is-invalid':form.get('phoneNumber').touched && form.get('phoneNumber').invalid}" />
+            <div *ngIf="form.get('phoneNumber').touched && form.get('phoneNumber').invalid"  class="invalid-feedback">
+              <div *ngIf="form.get('phoneNumber').errors.required">Phone Number is required</div>
+              <div *ngIf="form.get('phoneNumber').errors.minlength || form.get('phoneNumber').errors.maxlength">Phone Number  must be of 10 digit</div>
+              <div *ngIf="form.get('phoneNumber').errors.isNotANum" class="help is-danger">Phone Number cannot contain anything other than digits</div> 
+<!-- phoneNo.errors.isNotANum -->
+            </div>
+           
+          </div>
+      
+
+            <div class="form-group">
+              <label for="url">URL for your profile image</label>
+              <input type="url" class="form-control" formControlName="url" [ngClass]="{'is-invalid':form.get('url').touched && form.get('url').invalid}" required />
+              <div class="invalid-feedback">
+                <div>url is required</div>
+              </div>
+            </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary"  [disabled]="!form.valid">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

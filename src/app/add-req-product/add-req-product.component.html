@@ -1,0 +1,164 @@
+<!-- 
+<h2 class="page-header">Add product that you want :</h2>
+<form (submit)="addProductDB()" >
+  <div>
+    <label>NAME</label>
+    <input type="text" [(ngModel)]="name" name="name" [ngModelOptions]="{standalone: true}" class="form-control">
+  </div>
+
+  <div>
+    <label>EXPECTED PRICE (which is per month)</label>
+    <input type="text" [(ngModel)]="price" price="price" [ngModelOptions]="{standalone: true}" class="form-control">
+  </div>
+
+  <div>
+    <label>DISCRIPTION</label>
+    <input type="text" [(ngModel)]="dis" dis="dis" [ngModelOptions]="{standalone: true}" class="form-control">
+  </div>
+
+  <div>
+    <label>CITY</label>
+    <input type="text" [(ngModel)]="city" city="city" [ngModelOptions]="{standalone: true}" class="form-control">
+  </div>
+
+
+  <div>
+    <label>STATE</label>
+    <input type="text" [(ngModel)]="state" state="state" [ngModelOptions]="{standalone: true}" class="form-control">
+  </div>
+
+  <div>
+      <label>DATE for which thing is available to buyers/users</label>
+      <input type="date" [(ngModel)]="dob" name="dob" [ngModelOptions]="{standalone: true}" class="form-control">
+    </div>
+
+  <br>
+  <div>
+      <form (submit)="findSUB()" >
+      <label>CATEGORY : MAIN</label>
+      <select [(ngModel)]="cmain" cmain="cmain" [ngModelOptions]="{standalone: true}" >
+          <option *ngFor="let country of cat_main" value= {{country}}  >
+            {{country}}
+          </option>
+      
+        </select>
+
+        <input type="submit" class="btn btn-primary" value="TO SEE CATEGORY *">
+
+      </form>  
+  </div>
+
+ 
+
+  <div *ngIf="flag">
+      <label>CATEGORY : SUB</label>
+      <select [(ngModel)]="csub" csub="csub" [ngModelOptions]="{standalone: true}" >
+          <option *ngFor="let country of cat_sub" value= {{country}}  >
+            {{country}}
+          </option>
+      
+        </select>
+    
+  </div>
+  <br>
+ 
+  <br>
+  <br>
+  <input type="submit" class="btn btn-primary" value="submit">
+</form> -->
+
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-10">
+        <div class="jumbotron">
+          <h2>POST YOUR REQUEST FOR PRODUCT  :</h2>
+          <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+            <div class="form-group">
+              <label for="name_">Product Name</label>
+              <input type="text"  class="form-control" formControlName="name_" [ngClass]="{'is-invalid':form.get('name_').touched && form.get('name_').invalid}" required />
+              <div class="invalid-feedback">
+                <div>Product Name is required</div>
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="price_"> Price</label>
+              <input type="number"  class="form-control" formControlName="price_" [ngClass]="{'is-invalid':form.get('price_').touched && form.get('price_').invalid}" required />
+              <div class="invalid-feedback">
+                <div>price is required</div>
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="discription_">Description</label>
+              <input type="text"  class="form-control" formControlName="discription_" [ngClass]="{'is-invalid':form.get('discription_').touched && form.get('discription_').invalid}" required />
+              <div class="invalid-feedback">
+                <div>description is required</div>
+              </div>
+            </div>
+  
+  
+            <div class="form-group">
+              <label for="city_">CITY</label>
+              <input type="text"  class="form-control" formControlName="city_" [ngClass]="{'is-invalid':form.get('city_').touched && form.get('city_').invalid}" required />
+              <div class="invalid-feedback">
+                <div>city is required</div>
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="state_">STATE</label>
+              <input type="text"  class="form-control" formControlName="state_" [ngClass]="{'is-invalid':form.get('state_').touched && form.get('state_').invalid}" required />
+              <div class="invalid-feedback">
+                <div>state is required</div>
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="date_">DATE</label>
+              <input type="date"  class="form-control" formControlName="date_" [ngClass]="{'is-invalid':form.get('date_').touched && form.get('date_').invalid}" required />
+              <div class="invalid-feedback">
+                <div>Date is required</div>
+              </div>
+            </div>
+  
+            <!-- <div class="form-group">
+                <label for="image_">IMAGE (Should have same name , given in Name column)</label>
+                <input type="file" (change)="onFileSelected($event)" required />  
+                <div class="invalid-feedback">
+                    <div>Image is required</div>
+                </div>
+            </div> -->
+  
+           <div class="form-group">
+              <label for="cat">Main category</label>
+             <select class="form-control" formControlName="cat" [ngClass]="{'is-invalid':form.get('cat').touched && form.get('cat').invalid}" required  >
+               <option value=""> Choose main category </option>
+               <option *ngFor="let t of cat_main">{{t}}</option>
+             </select>
+             <!-- <div *ngIf="form.get('image_').errors.required">Images is required</div> -->
+                <!-- <div class="invalid-feedback">
+                  <div>Main category is required</div>
+                </div> -->
+            </div>
+  
+            <div class="form-group">
+                <label for="sub_cat">Sub category</label>
+               <select class="form-control" formControlName="sub_cat" [ngClass]="{'is-invalid':form.get('sub_cat').touched && form.get('sub_cat').invalid}" required  >
+                 <option value="">Choose sub category </option>
+                 <option *ngFor="let t of cat_sub">{{t}}</option>
+               </select>
+                  <div class="invalid-feedback">
+                    <div>Sub category is required</div>
+                  </div>
+              </div>
+            <div class="form-group">
+              <button class="btn btn-primary"  [disabled]="!form.valid">Register</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

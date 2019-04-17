@@ -1,0 +1,231 @@
+<div *ngIf="user">
+  <h2 class="page-header" >Hello , {{user.username}} . </h2>
+ 
+ <ul class="list-group">
+    <li class="list-group-item">NAME : {{user.name}}</li>
+    <li class="list-group-item">EMAIL : {{user.email}}</li> 
+  </ul>  
+  <br>
+  <p > Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor cupiditate veritatis id, doloremque eveniet dolore, vero distinctio deleniti voluptates consequatur voluptatum facere dolores dicta ipsam, labore quas molestiae. Fugiat, eaque. Aperiam pariatur sint dolorem reiciendis a, veniam doloremque ullam laborum. Officia voluptatibus odio quidem debitis ipsa vel in rerum doloremque consequatur cum sequi quia explicabo et quibusdam dignissimos illum incidunt at eligendi, libero vero ea natus. Hic impedit illo at explicabo nam aperiam quos, delectus tenetur eveniet amet velit officia eaque culpa repellat omnis obcaecati quod maiores accusantium? Perferendis aspernatur asperiores excepturi officiis eos aut ab, temporibus voluptate doloremque dolore! </p>
+  <br>
+  <!-- <app-add-hotel>hotel can't be added ..</app-add-hotel> -->
+  <!-- <button class="btn btn-danger"><a style="color:black" [routerLink]="['/addProduct']"><font color="white">ADD PRODUCT</font> </a></button> -->
+  <form (submit)="addP()">
+      <input type="submit" class="btn btn-primary" value="Add Product for rent"> 
+  </form>
+    <br>
+  <form (submit)="addReqP()">
+        <input type="submit" class="btn btn-primary" value="Add Product that you want"> 
+  </form>
+</div>
+<br>
+<div class="centroid">
+     <button class="btn btn-danger" (click)="refreshData()">REFRESH DATA</button>
+</div>
+<br>
+<div class="row">
+      <div class="col-md-6">
+        <h3>My products :</h3>
+        <table border = "1" cellpadding = "5" cellspacing = "5" bgcolor = "white" width="50%">
+            <tr>
+              <th>product name</th>
+              <th>IMAGE</th>
+              <th>Owner name</th>
+              <th> Current Status</th>
+              <th> Payment </th>
+              <!-- <th>Duration (in Month)</th> -->
+              <!-- <th>Go ahead</th> -->
+      
+            </tr>
+      
+            <tr *ngFor="let item of myProdOwn">
+                <td> {{item.product_name}} </td>
+                <td> <img src="{{item.url}}" height="50" width="50"> </td>
+                <td> {{item.owner_name}} </td>
+                <td> {{item.status}} <a (click)="deleteProd(item)" *ngIf="item.status" style="color: red" > back</a></td>
+                <td>  <a *ngIf="item.payment">done</a> <a *ngIf="!item.payment"> pending</a> 
+                      <button class="btn btn-danger" *ngIf="item.payment" (click)="paymentOffline()" > Offline payment</button>    
+                </td>
+                <!-- <td> {{item.duration}}</td> -->
+                <!-- <td>  <button class="btn btn-primary" (click)="myProdOwnFunc(item)">View Product</button>  </td> -->
+            </tr>
+            </table>
+      </div>
+      <div class="col-md-6">
+        <h3>My requested products :</h3>
+        <table border = "1" cellpadding = "5" cellspacing = "5" bgcolor = "white" width="50%">
+            <tr>
+              <th>product name</th>
+              <!-- <th>Buyer name</th> -->
+              <th>Owner name</th>
+              <th>current status</th>
+              <!-- <th>Duration (in Month)</th> -->
+              <!-- <th>Go ahead</th> -->
+      
+            </tr>
+      
+            <tr *ngFor="let item of myProdReq">
+                <td> {{item.product_name}} </td>
+                <!-- <td> {{item.buyer_name}} </td> -->
+                <td> {{item.owner_name}} </td>
+                <td> {{item.status}} <a *ngIf="item.status" style="color: red" (click)="deleteReqProd(item)"> Back</a></td>
+
+                <!-- <td> {{item.duration}}</td> -->
+                <!-- <td>  <button class="btn btn-primary" (click)="myProdReqFunc(item)">View Product</button>  </td> -->
+            </tr>
+            </table>
+      </div>
+</div>
+<hr>
+<br>
+<div class="row">
+    <div class="col-md-6">
+      <h3>My wish list for products :</h3>
+      <table border = "1" cellpadding = "5" cellspacing = "5" bgcolor = "white" width="50%">
+          <tr>
+            <th>product name</th>
+            <th>Buyer name</th>
+            <th>Owner name</th>
+            <th>Duration (in Month)</th>
+            <th>Go ahead</th>
+    
+          </tr>
+    
+          <tr *ngFor="let item of wishListOwn">
+              <td> {{item.product_name}} </td>
+              <td> {{item.buyer_name}} </td>
+              <td> {{item.owner_name}} </td>
+              <td> {{item.duration}}</td>
+              <td>  <button class="btn btn-primary" (click)="wishListOwnFunc(item)">View Prodcut</button>  </td>
+          </tr>
+          </table>
+    </div>
+    <div class="col-md-6">
+      <h3>My responses to other's products  :</h3>
+      <table border = "1" cellpadding = "5" cellspacing = "5" bgcolor = "white" width="50%">
+          <tr>
+            <th>product name</th>
+            <th>Buyer name</th>
+            <th>Owner name</th>
+            <th>Duration (in Month)</th>
+            <th>Go ahead</th>
+    
+          </tr>
+    
+          <tr *ngFor="let item of wishListReq">
+              <td> {{item.product_name}} </td>
+              <td> {{item.buyer_name}} </td>
+              <td> {{item.owner_name}} </td>
+              <td> {{item.duration}}</td>
+              <td>  <button class="btn btn-primary" (click)="wishListReqFunc(item)">View Product</button>  </td>
+          </tr>
+          </table>
+    </div>
+</div>
+<hr>
+<br>
+<div >
+  <h3> Responses to my own product :</h3>
+  <table border = "1" cellpadding = "5" cellspacing = "5" bgcolor = "white" width="50%">
+      <tr>
+        <th>product name</th>
+        <th>Buyer name</th>
+        <th>Owner name</th>
+        <th>Duration (in Month)</th>
+        <th> Status</th>
+        <th> Final status</th>
+        <th>Go ahead</th>
+
+      </tr>
+
+      <tr *ngFor="let item of bookedProducts">
+          <td> {{item.product_name}} </td>
+          <td> {{item.buyer_name}} </td>
+          <td> {{item.owner_name}} </td>
+          <td> {{item.duration}}</td>
+          <td> {{item.Status}}</td>
+          <td> {{item.final_status}}</td>
+          <td> <p *ngIf="item.final_status"> GIVEN </p>  <button *ngIf="!item.final_status" class="btn btn-primary" (click)="giveProduct(item)">GO</button>  </td>
+      </tr>
+      </table>
+
+      <br>
+      <hr>
+      <h3>Responses to my requested product :</h3>
+  <table border = "1" cellpadding = "5" cellspacing = "5" bgcolor = "white" width="50%">
+      <tr>
+        <th>product name</th>
+        <th>Buyer name</th>
+        <th>Owner name</th>
+        <th>Duration (in Month)</th>
+        <th> Status</th>
+        <th> Final status</th>
+        <th>Go ahead</th>
+
+      </tr>
+
+      <tr *ngFor="let item of bookedReqprodcuts">
+          <td> {{item.product_name}} </td>
+          <td> {{item.buyer_name}} </td>
+          <td> {{item.owner_name}} </td>
+          <td> {{item.duration}}</td>
+          <td> {{item.Status}}</td>
+          <td> {{item.final_status}}</td>
+          <td> <p *ngIf="item.final_status">TAKEN</p> <button class="btn btn-primary" *ngIf="!item.final_status" (click)="giveReqProduct(item)">GO</button>  </td>
+      </tr>
+      </table>
+
+
+</div>
+<br>
+<hr>
+<div class="row">
+    <div class="col-md-6">
+      <h3>Product i have taken for rent:</h3>
+      <table border = "1" cellpadding = "5" cellspacing = "5" bgcolor = "white" width="50%">
+          <tr>
+            <th>product name</th>
+            <th>Buyer name</th>
+            <th>Owner name</th>
+            <th>Duration (in Month)</th>
+            <th> Payment</th>
+            <!-- <td> payment type</td> -->
+            <!-- <th>Go ahead</th> -->
+    
+          </tr>
+    
+          <tr *ngFor="let item of OthersProdOwnByMe">
+              <td> {{item.product_name}} </td>
+              <td> {{item.buyer_name}} </td>
+              <td> {{item.owner_name}} </td>
+              <td> {{item.duration}} </td>
+              <td> {{item.payment}}  <button *ngIf="!item.payment" class="btn btn-danger" (click)= "payment(item)">Payment</button>  </td>
+              <!-- <td>  <button *ngIf="!item.payment" class="btn btn-danger" (click)= "payment(item)">Payment</button>   </td> -->
+          </tr>
+          </table>
+          <div *ngIf="flag_" style="background-color: paleturquoise">
+                <a href={{url_payment}}> CLICK HERE TO PAYMENT</a>
+          </div>
+    </div>
+    <div class="col-md-6">
+      <h3> Requested Product i have given for rent: :</h3>
+      <table border = "1" cellpadding = "5" cellspacing = "5" bgcolor = "white" width="50%">
+          <tr>
+            <th>product name</th>
+            <th>Buyer name</th>
+            <th>Owner name</th>
+            <th>Duration (in Month)</th>
+            <!-- <th>Go ahead</th> -->
+    
+          </tr>
+    
+          <tr *ngFor="let item of OthersReqProdOwnByMe">
+              <td> {{item.product_name}} </td>
+              <td> {{item.buyer_name}} </td>
+              <td> {{item.owner_name}} </td>
+              <td> {{item.duration}}</td>
+              <!-- <td>  <button class="btn btn-primary" (click)="wishListReqFunc(item)">View Product</button>  </td> -->
+          </tr>
+          </table>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div id="chat-room">
+  <h2>{{currentUsername}}, Your chat  with  {{ username }}</h2>
+  <span ><i *ngIf="isTyping" class="isTyping" style="color:black; size: 10px;">{{username}} is typing...</i></span>
+  <div id="chat-window">
+      <div *ngFor="let item of messageArray">
+          <!-- <h6> {{item.user}}</h6> -->
+          <p [class.userMessage] = "item.user == currentUsername" [class.secUserMessage]="item.user != currentUsername"><font color="blue">{{item.user}} : </font>  {{ item.message }}</p>                
+      </div>
+  </div>
+  <input (keypress)="typing()" [(ngModel)]="message" name="message" type="text" placeholder="Message" />            
+  <button id="send" (click)="sendMessage()" >Send</button>    
+</div>

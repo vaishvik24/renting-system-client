@@ -1,0 +1,125 @@
+<h1>Booking a prdouct &#8594; <font style="color: red"> {{current_product?.product_name}} </font></h1>
+<hr>
+
+<div class="sk-fading-circle" *ngIf="spinner1">
+    <div class="sk-circle1 sk-circle"></div>
+    <div class="sk-circle2 sk-circle"></div>
+    <div class="sk-circle3 sk-circle"></div>
+    <div class="sk-circle4 sk-circle"></div>
+    <div class="sk-circle5 sk-circle"></div>
+    <div class="sk-circle6 sk-circle"></div>
+    <div class="sk-circle7 sk-circle"></div>
+    <div class="sk-circle8 sk-circle"></div>
+    <div class="sk-circle9 sk-circle"></div>
+    <div class="sk-circle10 sk-circle"></div>
+    <div class="sk-circle11 sk-circle"></div>
+    <div class="sk-circle12 sk-circle"></div>
+</div>
+
+<div *ngIf="!spinner1" class="row">
+  <div class="col-md-4">
+      &#8594; Booking of a <font style="color: red"> {{current_product?.product_name}} </font> from a category  {{current_product?.category_main}} with sub
+     category {{current_product?.category_sub}} is located in city  {{current_product?.city}} in state  {{current_product?.state}}
+      having ratting   {{current_product?.ratting}} And product is landed by {{current_product?.owner_name}} .
+      <br>
+      <hr>
+      &#8594; And product is available from {{current_product?.ini_time}} to {{current_product?.end_time}} means for
+      approx {{current_product?.diffDays}} days stands for {{current_product?.diffMonths}} month with price <font style="color: red"> {{current_product?.price}} </font> Per month.
+      <br>
+      <hr>
+      &#8594; <button *ngIf="!showHistory" class="btn btn-primary" style="background-color: #e9f0ee ; color: black ; border-color: black" (click)="prevHistory(false)">View Previous History</button>
+     <button *ngIf="showHistory" class="btn btn-primary" style="background-color: #e9f0ee ; color: black ; border-color: black" (click)="prevHistory(true)">Hide Previous History</button>
+      <br>
+      <br>
+      <div *ngIf="showHistory">
+                  
+          <table border = "1" cellpadding = "5" cellspacing = "5" bgcolor = "white" width="50%">
+          <tr>
+            <th>product name</th>
+            <th>Buyer name</th>
+            <th>Owner name</th>
+            <th>Duration (in Month)</th>
+
+          </tr>
+
+          <tr *ngFor="let item of bookedProducts">
+              <td> {{item.product_name}} </td>
+              <td> {{item.buyer_name}} </td>
+              <td> {{item.owner_name}} </td>
+              <td> {{item.duration}}</td>
+          </tr>
+          </table>
+          <br>
+
+
+      </div>
+      <br>
+      &#8594; Before booking if you have any doubt or query related to product then you can contact 
+      owner {{current_product?.owner_name}} via phone , email and chat. options given below : <br>
+      &#9679; Contact number : <font style="color: blue">{{current_product?.phoneNumber}}</font> 
+      <br>
+      <!-- &#9679; <a  *ngIf="authService.loggedIn()" style="cursor: pointer;" ><a  style="cursor: pointer;" (click)="send_mail()" style="color:rgb(34, 29, 29)"><font color="blue">EMAIL</font> </a></a> <br>
+      &#9679; <a  *ngIf="authService.loggedIn()" style="cursor: pointer;" ><a style="cursor: pointer;" (click)="Chat_with()" style="color:rgb(22, 18, 18)"><font color="blue">CHAT</font> </a></a> -->
+      <br>
+      <hr>
+  </div>
+
+    <div *ngIf="!showText" class="col-md-8">
+        <h4>BOOKING DETAILS : </h4>
+        <h6> <a style="color: blue">Your name</a> : {{buyername}}</h6>
+        <h6> <a style="color: blue">Your email-ID</a> : {{buyeremail}}</h6>
+
+        <br>
+        <p>Here , price for given product is fixed {{current_product?.price}} but if you have any coupon then you here </p>
+        <label> COUPON : </label>
+        <input type="text" [(ngModel)]="coupon" coupon="coupon" [ngModelOptions]="{standalone: true}" >
+
+        <br>
+        <div>
+            <label>DATE for which thing is available to buyers/users</label>
+            <input type="date" [(ngModel)]="dob" name="dob" [ngModelOptions]="{standalone: true}" class="form-control">
+          </div>
+        <!-- <div class="row">
+            <div class="col-lg-4">
+                <label>Date for which thing is available</label>
+            </div>
+            <div class="col-lg-2">
+                <label>Date</label>
+              <select [(ngModel)]="eday" eday="eday" [ngModelOptions]="{standalone: true}" >
+                  <option *ngFor="let country of date_" value= {{country}}  >
+                    {{country}}
+                  </option>
+              
+                </select>
+            </div>
+            <div class="col-lg-3"> 
+                <label>Month</label>     
+            <select [(ngModel)]="emonth" emonth="emonth" [ngModelOptions]="{standalone: true}" >
+                <option *ngFor="let country of month_" value= {{country}}  >
+                  {{country}}
+                </option>
+            
+              </select>
+            </div>  
+            <div class="col-lg-2">      
+                <label>Year</label>
+              <select [(ngModel)]="eyear" eyear="eyear" [ngModelOptions]="{standalone: true}" >
+                  <option *ngFor="let country of year_" value= {{country}}  >
+                    {{country}}
+                  </option>
+              
+                </select>
+              </div>   
+            </div>    -->
+            <button class="btn btn-primary" (click)="bookProduct()">Book product</button>
+
+    </div>
+
+    <div *ngIf="showText" class="col-md-8">
+          <h1> YOU HAVE ALREADY BOOKED PRODUCT</h1>
+    </div>
+
+
+
+
+

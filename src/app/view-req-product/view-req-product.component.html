@@ -1,0 +1,115 @@
+<h1>Requested Product name : {{current_product?.product_name}}</h1>
+<hr>
+
+
+<div class="sk-fading-circle" *ngIf="spinner1">
+    <div class="sk-circle1 sk-circle"></div>
+    <div class="sk-circle2 sk-circle"></div>
+    <div class="sk-circle3 sk-circle"></div>
+    <div class="sk-circle4 sk-circle"></div>
+    <div class="sk-circle5 sk-circle"></div>
+    <div class="sk-circle6 sk-circle"></div>
+    <div class="sk-circle7 sk-circle"></div>
+    <div class="sk-circle8 sk-circle"></div>
+    <div class="sk-circle9 sk-circle"></div>
+    <div class="sk-circle10 sk-circle"></div>
+    <div class="sk-circle11 sk-circle"></div>
+    <div class="sk-circle12 sk-circle"></div>
+</div>
+
+<div class="row" *ngIf="!spinner1">
+  <div class="col-md-3" style="border:1px solid black; background-color: #fafdfc">
+      <h2>Category Info.</h2>
+      <h5>MAIN :</h5>
+      <h6>{{current_product?.category_main}}</h6>
+      <h5>SUB :</h5>
+      <h6>{{current_product?.category_sub}}</h6>
+  </div>
+  <div class="col-md-3" style="border:1px solid black; background-color: #f3f7f6;">
+    <h2>Other Info.</h2>
+      <h5>Exp. PRICE :</h5>
+      <h6>{{current_product?.price}}</h6>
+      <h5>INITIAL TIME :</h5>
+      <h6>{{current_product?.ini_time}}</h6>
+      <h5>END TIME :</h5>
+      <h6>{{current_product?.end_time}}</h6>
+   
+  </div>
+  <div class="col-md-3" style="border:1px solid black; background-color: #fafdfc">
+    <h2>Owner Details :</h2>
+      <h5>Owner name : </h5>
+      <h6>{{current_product?.owner_name}}</h6>
+      <h5>Owner email : </h5>
+      <h6>{{current_product?.owner_email}}</h6>
+      <h6>CITY :</h6>
+      <h6>{{current_product?.city}}</h6>
+      <h5>STATE :</h5>
+      <h6>state : {{current_product?.state}}</h6>
+  </div>
+  <div class="col-md-3" style="border:1px solid black; background-color: #f3f7f6; ">
+      <h2>DISCRIPTION :</h2>
+      <p> {{current_product?.discription}}</p>
+  </div>
+</div>
+
+<hr>
+<a  *ngIf="!authService.loggedIn()"     [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a style="color:black" [routerLink]="['/Login']"> <font color="black">For fulfill this request you need to LOGIN first <font color="blue"> (CLICK HERE)</font></font> </a></a>
+<div *ngIf="showBook">
+    <h1>YOU HAVE ALREADY RESPONSED TO THIS PRODUCT</h1>
+</div>
+<div *ngIf="authService.loggedIn() && !spinner1 && !showBook">
+    
+    <div class="col-md-8">
+        <h4>BOOKING DETAILS : </h4>
+        <h6> <a style="color: blue">Your name</a> : {{buyername}}</h6>
+        <h6> <a style="color: blue">Your email-ID</a> : {{buyeremail}}</h6>
+
+        <br>
+        <!-- <p>Here , price for given product is fixed {{current_product?.price}} but if you have any coupon then you here </p>
+        <label> Proposed price : </label>
+        <input type="text" [(ngModel)]="proposedprice" proposedprice="proposedprice" [ngModelOptions]="{standalone: true}" > -->
+
+        <br>
+        <div>
+            <label>DATE for which thing is available to buyers/users</label>
+            <input type="date" [(ngModel)]="dob" name="dob" [ngModelOptions]="{standalone: true}" class="form-control">
+          </div>
+        <!-- <div class="row">
+            <div class="col-lg-4">
+                <label>Date for which thing is available</label>
+            </div>
+            <div class="col-lg-2">
+                <label>Date</label>
+              <select [(ngModel)]="eday" eday="eday" [ngModelOptions]="{standalone: true}" >
+                  <option *ngFor="let country of date_" value= {{country}}  >
+                    {{country}}
+                  </option>
+              
+                </select>
+            </div>
+            <div class="col-lg-3"> 
+                <label>Month</label>     
+            <select [(ngModel)]="emonth" emonth="emonth" [ngModelOptions]="{standalone: true}" >
+                <option *ngFor="let country of month_" value= {{country}}  >
+                  {{country}}
+                </option>
+            
+              </select>
+            </div>  
+            <div class="col-lg-2">      
+                <label>Year</label>
+              <select [(ngModel)]="eyear" eyear="eyear" [ngModelOptions]="{standalone: true}" >
+                  <option *ngFor="let country of year_" value= {{country}}  >
+                    {{country}}
+                  </option>
+              
+                </select>
+              </div>   
+            </div>    -->
+            <button class="btn btn-primary" (click)="bookProduct()">Book product</button>
+
+    </div>
+</div>
+
+
+

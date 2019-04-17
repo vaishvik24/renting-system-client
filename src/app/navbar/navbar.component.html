@@ -1,0 +1,52 @@
+  <!-- <nav class="navbar navbar-default navbar-fixed-top" style="color:beige; background-color: black;min-height: 100px; height: 100px; ">
+    <a class="navbar-brand" style="color:rgb(250, 250, 250) " [routerLink]="['/']">Rent Karo &#8482;</a>
+  
+    <div  class="nav navbar-right" >
+  
+      <ul>
+          <a  *ngIf="!authService.loggedIn()"   [routerLinkActive]="['active']"><a style="color:black" [routerLink]="['/']"><font color="white">HOME </font> </a></a>  
+          <a  *ngIf="!authService.loggedIn()"     [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a style="color:black" [routerLink]="['/Login']"> <font color="white">| LOGIN</font> </a></a>
+          <a  *ngIf="!authService.loggedIn()"     [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a style="color:black" [routerLink]="['/Register']"><font color="white">| REGISTER</font> </a></a>
+          <a  *ngIf="authService.loggedIn()"   [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a style="color:black" [routerLink]="['']"><font color="white">Home |</font> </a></a>
+          <a  *ngIf="authService.loggedIn()"   [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a style="color:black" [routerLink]="['Profile',usernameOfUser]"><font style="color: rgb(249, 249, 250)">Profile </font> </a></a>
+          <a  *ngIf="authService.loggedIn()" ><a (click)="onLogout()" style="color:black"><font color="red">| LOG-OUT</font> </a></a>
+         
+     
+        </ul>
+   
+    </div>
+  
+   
+  </nav> 
+   -->
+
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" [routerLink]="['/']">Rent Karo</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active"   [routerLinkActive]="['active']" >
+            <a class="nav-link" [routerLink]="['/']" >Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item" *ngIf="!authService.loggedIn()"   [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['/Login']">Login</a>
+          </li>
+          <li class="nav-item" *ngIf="!authService.loggedIn()"   [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['/Register']">Register</a>
+          </li>
+          <li class="nav-item" *ngIf="authService.loggedIn()"   [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['/Profile',usernameOfUser]">Profile</a>
+          </li>
+          <li class="nav-item" *ngIf="authService.loggedIn()"   [routerLinkActive]="['active']">
+              <a class="nav-link"  (click)="onLogout()">Logout</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>   
